@@ -7,7 +7,7 @@
 
 Clone Repositório
 ```sh
-git clone https://
+git clone https://github.com/rccheruti/mojo-back.git
 ```
 
 Instalar as dependências do projeto
