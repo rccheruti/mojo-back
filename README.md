@@ -20,19 +20,20 @@ Gerar a key do projeto Laravel
 php artisan key:generate
 ```
 
-## Modulos
+## Módulos
 
 Cadastro usuário:
 - Utilizando uma requisição POST para enviar um JSON.
- 
+- URL: 
+```dosini
+localhost:8000/api/auth/registro
+```
+
 ```dosini
     {
-        "nome" : " ",
-
+        "name" : " ",
         "email" : " ",
-
         "password" : " ",
-
         "password_confirmation" : " "
     }
 ```
@@ -48,10 +49,14 @@ Cadastro usuário:
  
  Login:
 - Utilizando uma requisição POST para enviar um JSON.
+
+```dosini
+localhost:8000/api/auth/login
+```
+
 ```dosini
     {
         "email" : " ",
-
         "password" : " "
         
     }

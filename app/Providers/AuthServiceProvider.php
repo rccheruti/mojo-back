@@ -5,11 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Passport\Passport;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use App\Models\Passport\AuthCode;
-use App\Models\Passport\Client;
-use App\Models\Passport\PersonalAccessClient;
-use App\Models\Passport\RefreshToken;
-use App\Models\Passport\Token;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -19,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
     /**
@@ -28,17 +24,18 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-        Passport::loadKeysFrom(__DIR__.'/../secrets/oauth');
-
-        Passport::useTokenModel(Token::class);
-        Passport::useRefreshTokenModel(RefreshToken::class);
-        Passport::useAuthCodeModel(AuthCode::class);
-        Passport::useClientModel(Client::class);
-        Passport::usePersonalAccessClientModel(PersonalAccessClient::class);
-
-        Passport::tokensCan([
-            'place-orders' => 'Place orders',
-            'check-status' => 'Check order status',
-        ]);
+//        Passport::loadKeysFrom(__DIR__.'/../secrets/oauth');
+//
+//        Passport::useTokenModel(Token::class);
+//        Passport::useRefreshTokenModel(RefreshToken::class);
+//        Passport::useAuthCodeModel(AuthCode::class);
+//        Passport::useClientModel(Client::class);
+//        Passport::usePersonalAccessClientModel(PersonalAccessClient::class);
+//
+//        Passport::tokensCan([
+//            'place-orders' => 'Place orders',
+//            'check-status' => 'Check order status',
+//        ]);
+//        Passport::routes();
     }
 }
