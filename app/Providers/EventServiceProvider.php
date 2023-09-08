@@ -15,8 +15,52 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        'Illuminate\Auth\Events\Registered' => [
+            'App\Listeners\LogRegisteredUser',
+        ],
+
+        'Illuminate\Auth\Events\Attempting' => [
+            'App\Listeners\LogAuthenticationAttempt',
+        ],
+
+        'Illuminate\Auth\Events\Authenticated' => [
+            'App\Listeners\LogAuthenticated',
+        ],
+
+        'Illuminate\Auth\Events\Login' => [
+            'App\Listeners\LogSuccessfulLogin',
+        ],
+
+        'Illuminate\Auth\Events\Failed' => [
+            'App\Listeners\LogFailedLogin',
+        ],
+
+        'Illuminate\Auth\Events\Validated' => [
+            'App\Listeners\LogValidated',
+        ],
+
+        'Illuminate\Auth\Events\Verified' => [
+            'App\Listeners\LogVerified',
+        ],
+
+        'Illuminate\Auth\Events\Logout' => [
+            'App\Listeners\LogSuccessfulLogout',
+        ],
+
+        'Illuminate\Auth\Events\CurrentDeviceLogout' => [
+            'App\Listeners\LogCurrentDeviceLogout',
+        ],
+
+        'Illuminate\Auth\Events\OtherDeviceLogout' => [
+            'App\Listeners\LogOtherDeviceLogout',
+        ],
+
+        'Illuminate\Auth\Events\Lockout' => [
+            'App\Listeners\LogLockout',
+        ],
+
+        'Illuminate\Auth\Events\PasswordReset' => [
+            'App\Listeners\LogPasswordReset',
         ],
     ];
 
@@ -25,7 +69,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        parent::boot();
     }
 
     /**
