@@ -56,8 +56,7 @@ php artisan key:generate
 >- Se é Adminstrador
 >- Se é Criador
 >
->Como não ficou bem claro se deveria ser um só implementei a possibilidade de a pessoa executar as duas tarefas, logicamente administrador tem todo o poder, mas por fim deixei assim.
-<br>
+> Como não ficou bem claro se deveria ser um só implementei a possibilidade de a pessoa executar as duas tarefas, logicamente administrador tem todo o poder, mas por fim deixei assim.
 > O usuário irá receber em seu email uma mensagem para confirmação do cadastro,
 > somente será possível o login após confirmação.
 
@@ -86,7 +85,8 @@ php artisan key:generate
 ***
 ### Login
 >
-> - Utilizando uma requisição POST para enviar um JSON.
+>> Para o usuário logar no sistema
+> - Utilizando uma requisição POST para enviar um JSON com as informações de login.
 >
 >```dosini
 > /api/v1/login
@@ -102,7 +102,8 @@ php artisan key:generate
 > - Email cadastrado
 > - Password cadastrado
 >
->Retornará um JSON, nele haverá um token de acesso para poder executar as demais funções do sistema.
+> Retornará um JSON, nele haverá um token de acesso para poder executar as demais funções do sistema.
+> 
 
 ***
 
