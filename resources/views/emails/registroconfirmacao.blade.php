@@ -1,78 +1,12 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet">
-    <title>mojo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Registro - Mojo</title>
 </head>
-<style>
-    * {
-        font-family: 'Inter', sans-serif;
-        line-height: 26.63px;
-    }
-
-    body {
-        background: #191919;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-
-        margin: 50px;
-    }
-
-    .logo {
-        display: flex;
-        align-items: center;
-
-        margin-bottom: 20px;
-    }
-
-    .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        background: #fff;
-        color: #191919;
-
-        padding: 20px;
-        margin: 20px auto;
-
-        border-radius: 15px;
-    }
-
-    a {
-        color: #F9F9F9;
-        background: #00c84b;
-
-        width: 306px;
-        height: 54px;
-
-        margin: 0 auto;
-
-        font-weight: 600;
-
-    }
-
-    footer {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        align-content: center;
-        margin: 20px auto;
-
-        color: #F9F9F9;
-
-    }
-</style>
-
 <body>
-<div class="logo">
+<div style="display: flex; align-items: center; margin-bottom: 20px;">
     <svg width="120" height="48" viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_2_1914)">
             <path
@@ -101,21 +35,23 @@
         </defs>
     </svg>
 </div>
-<div class="content">
-    <h4>Seja bem vindo(a), {{ $nome }}</h4>
-    <p>Você acabou de se registrar no sistema, e utilizou o email: {{ $email }}
-        <br>
-        Data / Hora de acesso: {{ $datahora }}
-        <br>
-        Clique no link abaixo para confirmar seu email de registro.
-        <br>
+<div style="max-width: 600px; margin: 0 auto; padding: 20px; color: #000;">
+    <h4>Seja bem-vindo(a),<strong>{{ $nome }}</strong></h4>
+    <p>Você acabou de se registrar no sistema utilizando o e-mail: <strong> {{ $email }}</strong></p>
+    <p>Suas permissões no sistema são:
+        <strong>
+            @if($admin)
+                Administrador
+            @elseif($creator)
+                Criador
+            @elseif($admin && $creator)
+                Administrador/Criador
+            @endif
+        </strong>
     </p>
-    <a href=" {{ $link }}">CONFIRMAR EMAIL</a>
+    <p>Data/Hora de acesso:<strong> {{ $datahora }}</strong></p>
+    <p>Clique no link abaixo para confirmar seu e-mail de registro.</p>
+    <a href="{{ $link }}" style="display: inline-block; padding: 10px 20px; background-color: #00C84B; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 10px;">CONFIRMAR EMAIL</a>
 </div>
-<footer>
-    <p>
-        2023@mojo
-    </p>
-</footer>
 </body>
 </html>

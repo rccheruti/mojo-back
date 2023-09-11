@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LocalController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,19 +20,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group([
-    'as' => 'passport.',
-    'middleware' => 'api',
-    'namespace' => 'App\Http\Controllers',
-    'prefix' => 'auth'
-
-], function ($router) {
+Route::prefix('v1')->group(function () {
     Route::post('registro', [AuthController::class,'registro']);
     Route::post('login', [AuthController::class, 'login']);
     Route::get('registro/ativar/{id}/{token}',[AuthController::class, 'ativarregistro']);
 
     Route::middleware('auth:api')->group(function (){
         Route::post('logout',[AuthController::class, 'logout']);
-    });
 
+        Route::get('local/index/',[LocalController::class, 'index']);
+        Route::post('local/store/',[LocalController::class,'store']);
+        Route::patch('local/update/{id}',[LocalController::class,'update']);
+        Route::delete('local/delete/{id}',[LocalController::class,'destroy']);
+
+
+    });
 });

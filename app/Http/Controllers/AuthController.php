@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Events\EventNovoRegistro;
 use App\Models\User;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
+
 class AuthController extends Controller
 {
+    use HttpResponses;
     public function registro(Request $request){
 
         $request->validate([
             'name' => 'required | string',
             'email' => 'required | string | email | unique:users',
-            'password' => 'required | string | confirmed'
+            'password' => 'required | string | confirmed',
         ]);
 
         $user = new User([
@@ -23,51 +26,40 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'token' => Str::random(40),
+            'admin' => $request->admin,
+            'creator' => $request->creator,
         ]);
 
         $user->save();
 
         event(new EventNovoRegistro($user));
 
-        return response()->json([
-            'response' => 'Usuário criado com sucesso!'
-        ], 201);
+        return $this->response('Usuário cadastrado com sucesso!', 201);
 
     }
 
-    public function login(Request $request){
-
+    public function login(Request $request)
+    {
         $request->validate([
             'email' => 'required | string | email',
             'password' => 'required | string'
         ]);
 
-        $credenciais = [
-            'email' => $request->email,
-            'password' => $request->password,
-            'active' => 1
-        ];
-
-        if (!Auth::attempt($credenciais))
-            return response()->json([
-                'res' => 'Acesso negado!'
-            ], 401);
-
-        $user = $request->user();
-        $token = $user->createToken('Token de acesso')->accessToken;
-
-        return response()->json([
-            'token' => $token
-        ], 200);
-
+        if(Auth::attempt($request->only('email','password', 'active'))){
+            return $this->response('Autorizado', 200, [
+                'token' => $request->user()->createToken('Token'),
+            ]);
+        }
+        else {
+            return $this->response('Credenciais inválidas ou usuário inativo', 401);
+        }
     }
 
     public function logout(Request $request){
 
         $request->user()->token()->revoke();
-        return response()->json([
-            'response' => 'Deslogado com sucesso!'
-        ]);
+
+        return $this->response('Usuário deslogado com sucesso!', 200);
 
     }
 
@@ -79,13 +71,9 @@ class AuthController extends Controller
                 $user->token = '';
                 $user->save();
 
-                return response()->json([
-                    'response' => 'Você acaba de se registrar com sucesso!'
-                ]);
+                return $this->response('Você acaba de se registrar com sucesso!', 200);
             }
         }
-        return response()->json([
-            'response' => 'Ocorreu um erro em seu registro!'
-        ]);
+        return $this->response('Ocorreu um erro em seu registro!', 200);
     }
 }

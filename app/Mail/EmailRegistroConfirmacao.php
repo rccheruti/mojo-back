@@ -20,11 +20,13 @@ class EmailRegistroConfirmacao extends Mailable
 
     public function build()
     {
-        $link = url('/api/auth/registro/ativar/' . $this->user->id . '/' . $this->user->token);
+        $link = url('/api/v1/registro/ativar/' . $this->user->id . '/' . $this->user->token);
 
         return $this->view('emails.registroconfirmacao')->with([
             'nome' => $this->user->name,
             'email' => $this->user->email,
+            'admin' => $this->user->admin,
+            'creator' => $this->user->creator,
             'link' => $link,
             'datahora' => now()->setTimezone('America/Sao_Paulo')->format('d-m-y H:i:s')
         ]);

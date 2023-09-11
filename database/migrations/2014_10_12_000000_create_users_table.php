@@ -19,6 +19,8 @@ return new class extends Migration
             $table->boolean('active')->default(false);
             $table->string('token');
             $table->string('password');
+            $table->boolean('admin');
+            $table->boolean('creator');
             $table->rememberToken();
             $table->timestamps();
         });
