@@ -26,13 +26,19 @@ Route::prefix('v1')->group(function () {
     Route::get('registro/ativar/{id}/{token}',[AuthController::class, 'ativarregistro']);
 
     Route::middleware('auth:api')->group(function (){
-        Route::post('logout',[AuthController::class, 'logout']);
+        Route::get('registro/listar',[AuthController::class,'index']);
+        Route::patch('registro/editar/{id}',[AuthController::class, 'update']);
+        Route::delete('registro/delete/{id}',[AuthController::class,'destroy']);
+
+        Route::get('permissao/usuario/{id}/consulta',[AuthController::class, 'getPermission']);
+        Route::patch('permissao/usuario/{id}/atualizar',[AuthController::class, 'setPermission']);
 
         Route::get('local/index/',[LocalController::class, 'index']);
         Route::post('local/store/',[LocalController::class,'store']);
         Route::patch('local/update/{id}',[LocalController::class,'update']);
         Route::delete('local/delete/{id}',[LocalController::class,'destroy']);
 
+        Route::post('logout',[AuthController::class, 'logout']);
 
     });
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\EventNovoRegistro;
 use App\Models\User;
 use App\Traits\HttpResponses;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -55,7 +56,8 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
 
         $request->user()->token()->revoke();
 
@@ -63,7 +65,8 @@ class AuthController extends Controller
 
     }
 
-    public function ativarregistro($id, $token){
+    public function ativarregistro($id, $token)
+    {
         $user = User::find($id);
         if ($user) {
             if ($user->token == $token) {
@@ -75,5 +78,45 @@ class AuthController extends Controller
             }
         }
         return $this->response('Ocorreu um erro em seu registro!', 200);
+    }
+
+    public function getPermission(int $id): JsonResponse
+    {
+        $user = User::find($id);
+        if($user->creator && $user->admin){
+            return $this->response('O usuário tem permissão de Adminstrador e Criador.', 200);
+        } elseif ($user->admin) {
+            return $this->response('O usuário tem permissão de Administrador.', 200);
+        } else {
+            return $this->response('O usuário tem permissão de Criador.', 200);
+        }
+    }
+
+    public function setPermission(Request $request,int $id)
+    {
+        $user = User::find($id);
+        $user->update($request->all());
+        $user->save();
+
+        return $this->response('Permissão atualizada com sucesso!', 200,[$user]);
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $user = User::find($id);
+        $user->update($request->all());
+        $user->save();
+        return $this->response('Dados do usuário alterados com sucesso!', 200,[$user]);
+    }
+
+    public function destroy($id)
+    {
+        User::destroy($id);
+        return $this->response('Usuário deletado com sucesso!', 200, [$id]);
+    }
+
+    public function index(): string
+    {
+        return User::all()->toJson();
     }
 }
