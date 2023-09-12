@@ -1,4 +1,4 @@
-# Mojo API backend
+# Mojo API
 
 - Este projeto feito com o framework Laravel 10.
   
