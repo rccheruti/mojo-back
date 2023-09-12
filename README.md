@@ -189,8 +189,5 @@ php artisan key:generate
 >
 
 ***
-#### Quero agradeçer a oportunidade de poder tentar fazer o teste, sempre é bom nos desarfiarmos, tive diversos contratempos
-#### durante a execução do teste, o que cuminou no atraso e na elminação do processo. Mas de toda forma sou grato.
-
 ###### Roger Cheruti 
 ###### Whatsapp (48) 99171-9504
